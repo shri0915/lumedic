@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, useRef } from 'react';
 import { Button, Form, TextInput, Select, SelectItem } from "carbon-components-react";
 import {createUseStyles} from 'react-jss';
 import stateList from "../../data/StateList";
@@ -43,9 +43,15 @@ TextInputFields:{
 })
 
 
-const InformationForm = ({children}) => {
+
+
+
+
+
+const InformationForm = () => {
   const classes = useStyle()
 return (
+  
   <Form className={classes.informationForm}>
     <div style={{margin: '2rem'}}>
       <labelText className={classes.lableTextHeading}>
@@ -68,7 +74,12 @@ return (
         labelText="First Name"
         placeholder="Johnny"
         required={true}
-        
+        onBlur={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
+        onKeyDownCapture={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
       />
     </div>
     <div style={{margin: '2rem'}}>
@@ -78,6 +89,12 @@ return (
         labelText="Last Name"
         placeholder="Appleseed"
         required={true}
+        onBlur={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
+        onKeyDownCapture={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
       />
       </div>
       <div style={{margin: '2rem'}}>
@@ -87,6 +104,12 @@ return (
         labelText="Date Of Birth"
         placeholder="MM/DD/YYYY"
         required={true}
+        onBlur={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
+        onKeyDownCapture={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
       />
       </div>
       <div style={{margin: '2rem'}}>
@@ -104,6 +127,12 @@ return (
         labelText='Mobile Number'
         placeholder="(###)###-####"
         required={true}
+        onBlur={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
+        onKeyDownCapture={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
       />
       
       </div>
@@ -116,6 +145,12 @@ return (
         placeholder="you@mail.com"
         required={true}
         pattern='\S+@\S+\.\S+'
+        onBlur={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
+        onKeyDownCapture={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
       />
       </div>
     <div style={{margin: '2rem'}}>
@@ -125,6 +160,12 @@ return (
       labelText="Mailing Address"
       placeholder="Primary street address"
       required={true}
+      onBlur={event => {if(event.target.value == '') {
+        event.target.reportValidity(false)
+      }}}
+      onKeyDownCapture={event => {if(event.target.value == '') {
+        event.target.reportValidity(false)
+      }}}
     />
     </div>
     <div style={{margin: '2rem'}}>
@@ -142,6 +183,12 @@ return (
         labelText="City"
         placeholder="Seattle"
         required={true}
+        onBlur={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
+        onKeyDownCapture={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
       />
       </div>
     <div style={{margin: '2rem'}}>
@@ -151,9 +198,15 @@ return (
         invalidText="This is an invalid error message."
         labelText="State"
         required={true}
+        onBlur={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
+        onKeyDownCapture={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
       >
         {stateList.map((state) =>
-          <SelectItem 
+          <SelectItem key = {state.abbr}
           text = {state.abbr}
           value = {state.name}
           />
@@ -167,6 +220,12 @@ return (
         labelText="Postal Code"
         placeholder="#####"
         required={true}
+        onBlur={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
+        onKeyDownCapture={event => {if(event.target.value == '') {
+          event.target.reportValidity(false)
+        }}}
       />
       </div>
       <div style={{margin: '2rem'}}>
