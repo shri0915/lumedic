@@ -1,15 +1,13 @@
 import React from 'react';
-import { Button, Form, TextInput, TextArea, Select, SelectItem } from "carbon-components-react";
+import { Button, Form, TextInput, Select, SelectItem } from "carbon-components-react";
 import {createUseStyles} from 'react-jss';
 import stateList from "../../data/StateList";
 
 const useStyle = createUseStyles({
   informationForm:{
     display: 'Flex',
-    alignContent: 'center',
     backgroundColor: 'white',
     flexWrap: 'wrap',
-    alignItems: 'center',
     marginTop: '10vw',
     marginBottom: '10vw',
     marginRight: '25vw',
@@ -24,12 +22,23 @@ submitButton:{
 },
 lableTextMobile:{
   color: '#525252',
-  fontSize: '10pt'
+  fontSize: '10pt',
+  whiteSpace: 'pre-wrap'
 },
 lableTextHeading:{
   color: '#525252',
   fontSize: '12pt',
   fontWeight: 'bold'
+},
+lableTextPrivacy:{
+  color: '#525252',
+  fontSize: '10pt',
+  fontWeight: 'bold'
+},
+TextInputFields:{
+    paddingLeft: '2rem',
+    paddingRight: '2rem',
+    width: '15vw'
 }
 })
 
@@ -53,34 +62,35 @@ return (
       </labelText>
     </div>
     <div style={{margin: '2rem'}}>
-      <TextInput
+      <TextInput className={classes.TextInputFields}
         id="firstName"
         invalidText="Invalid error message."
         labelText="First Name"
         placeholder="Johnny"
-        required
+        required={true}
+        
       />
     </div>
     <div style={{margin: '2rem'}}>
-      <TextInput
+      <TextInput className={classes.TextInputFields}
         id="lastName"
         invalidText="Invalid error message."
         labelText="Last Name"
         placeholder="Appleseed"
-        required
+        required={true}
       />
       </div>
       <div style={{margin: '2rem'}}>
-      <TextInput
+      <TextInput className={classes.TextInputFields}
         id="dob"
         invalidText="Invalid error message."
         labelText="Date Of Birth"
         placeholder="MM/DD/YYYY"
-        required
+        required={true}
       />
       </div>
       <div style={{margin: '2rem'}}>
-      <TextInput
+      <TextInput className={classes.TextInputFields}
         id="ssn"
         invalidText="Invalid error message."
         labelText="Social Security Number (Last 4 Digits, optional)"
@@ -88,55 +98,50 @@ return (
       />
       </div>
       <div style={{margin: '2rem'}}>
-      <labelText className={classes.lableTextMobile}>Mobile Number</labelText>
-      <TextInput
+      <TextInput className={classes.TextInputFields} 
         id="mobile"
         invalidText="Invalid error message."
-        labelText="To receive text messages and download our mobile application"
+        labelText='Mobile Number'
         placeholder="(###)###-####"
-        required
+        required={true}
       />
       
       </div>
       <div style={{margin: '2rem'}}>
-      <TextInput
+      <TextInput className={classes.TextInputFields}
         id="email"
         type="email"
         invalidText="Invalid error message."
         labelText="Email"
         placeholder="you@mail.com"
-        required
+        required={true}
         pattern='\S+@\S+\.\S+'
       />
       </div>
     <div style={{margin: '2rem'}}>
-    <TextArea
-      cols={50}
+    <TextInput className={classes.TextInputFields}
       id="mailingAddress1"
       invalidText="Invalid error message."
       labelText="Mailing Address"
       placeholder="Primary street address"
-      rows={1}
-      required
+      required={true}
     />
     </div>
     <div style={{margin: '2rem'}}>
-    <TextArea
-      cols={50}
+    <TextInput className={classes.TextInputFields}
       id="mailingAddress2"
       invalidText="Invalid error message."
       labelText="Mailing Address (optional)"
       placeholder="Unit #, Apt, Suite"
-      rows={1}
     />
     </div>
     <div style={{margin: '2rem'}}>
-      <TextInput
+      <TextInput className={classes.TextInputFields}
         id="city"
         invalidText="Invalid error message."
         labelText="City"
         placeholder="Seattle"
-        required
+        required={true}
       />
       </div>
     <div style={{margin: '2rem'}}>
@@ -145,7 +150,7 @@ return (
         id="select-1"
         invalidText="This is an invalid error message."
         labelText="State"
-        required
+        required={true}
       >
         {stateList.map((state) =>
           <SelectItem 
@@ -156,21 +161,29 @@ return (
       </Select>
     </div>
     <div style={{margin: '2rem'}}>
-      <TextInput
+      <TextInput className={classes.TextInputFields}
         id="postalCode"
         invalidText="Invalid error message."
         labelText="Postal Code"
         placeholder="#####"
-        required
+        required={true}
       />
       </div>
-    <Button
+      <div style={{margin: '2rem'}}>
+      <Button
       className={classes.submitButton}
       kind="primary"
       type="submit"
     >
       Submit
     </Button>
+      </div>
+    
+    <div style={{margin: '2rem'}}>
+      <labelText className={classes.lableTextPrivacy}>
+      By submitting your information, you are agreeing to the Privacy Policy.
+      </labelText>
+    </div>
 </Form>
   );
 }
