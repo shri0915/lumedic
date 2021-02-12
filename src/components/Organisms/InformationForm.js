@@ -25,6 +25,11 @@ submitButton:{
 lableTextMobile:{
   color: '#525252',
   fontSize: '10pt'
+},
+lableTextHeading:{
+  color: '#525252',
+  fontSize: '12pt',
+  fontWeight: 'bold'
 }
 })
 
@@ -33,7 +38,20 @@ const InformationForm = ({children}) => {
   const classes = useStyle()
 return (
   <Form className={classes.informationForm}>
-    
+    <div style={{margin: '2rem'}}>
+      <labelText className={classes.lableTextHeading}>
+        Please enter the same information you provided in your Providence health system medical record.
+        </labelText>
+    </div>
+    <div style={{marginRight: '2rem'},{marginLeft: '2rem'}}>
+      <labelText className={classes.lableTextMobile}>
+      The information you provide on this page is used to locate your record from 
+      your health system for the purpose of issuing your vaccine records to your mobile device. 
+      By providing your mobile number you are consenting to be contacted regarding the availability 
+      of your vaccine records. Your mobile number will not be used for mobile marketing, and messaging 
+      or data charges may be imposed by your carrier.
+      </labelText>
+    </div>
     <div style={{margin: '2rem'}}>
       <TextInput
         id="firstName"
