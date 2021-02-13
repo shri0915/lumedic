@@ -284,7 +284,6 @@ const InformationForm = () => {
           Submit
         </Button>
       </div>
-
       <div style={{ margin: '2rem' }}>
         <labelText className={classes.lableTextPrivacy}>
           By submitting your information, you are agreeing to the Privacy Policy.
