@@ -44,7 +44,7 @@ const useStyle = createUseStyles({
   },
 });
 
-const InformationForm = () => {
+const InformationForm = ({children}) => {
   const classes = useStyle();
   return (
 
