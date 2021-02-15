@@ -72,8 +72,6 @@ const useStyle = createUseStyles({
 const InformationForm = () => {
   const classes = useStyle();
   return (
-    
-   
     <Form className={classes.informationForm}>
       <div style={{ margin: '2rem' }}>
         <labelText className={classes.lableTextHeading}>
