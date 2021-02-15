@@ -17,12 +17,12 @@ const useStyle = createUseStyles({
     textAlign: 'left',
   },
   submitButton: {
+    display: 'flex',
     backgroundColor: 'purple',
     fontWeight: 'bold',
-    alignContent: 'center',
-    textAlign: 'center',
+    width: '15vw'
   },
-  lableTextMobile: {
+  lableText: {
     color: '#525252',
     fontSize: '10pt',
     whiteSpace: 'pre-wrap',
@@ -36,18 +36,44 @@ const useStyle = createUseStyles({
     color: '#525252',
     fontSize: '10pt',
     fontWeight: 'bold',
+    display: 'flex'
   },
   TextInputFields: {
     paddingLeft: '2rem',
     paddingRight: '2rem',
     width: '15vw',
   },
+  NameBoxes: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '20vw'
+  },
+  DOBSSN: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '20vw'
+  },
+  ContactInfo: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '20vw'
+  },
+  AddressInfo: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '20vw'
+  },
+  SubmitFlex: {
+    
+
+  }
 });
 
 const InformationForm = () => {
   const classes = useStyle();
   return (
-
+    
+   
     <Form className={classes.informationForm}>
       <div style={{ margin: '2rem' }}>
         <labelText className={classes.lableTextHeading}>
@@ -56,7 +82,7 @@ const InformationForm = () => {
         </labelText>
       </div>
       <div style={{ marginRight: '2rem', marginLeft: '2rem' }}>
-        <labelText className={classes.lableTextMobile}>
+        <labelText className={classes.lableText}>
           The information you provide on this page is used to locate your record from
           your health system for the purpose of issuing your vaccine records to your
           mobile device.
@@ -69,7 +95,7 @@ const InformationForm = () => {
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.TextInputFields, classes.NameBoxes}
           id="firstName"
           invalidText="Invalid error message."
           labelText="First Name"
@@ -89,7 +115,7 @@ const InformationForm = () => {
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.TextInputFields, classes.NameBoxes}
           id="lastName"
           invalidText="Invalid error message."
           labelText="Last Name"
@@ -109,7 +135,7 @@ const InformationForm = () => {
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.TextInputFields, classes.DOBSSN}
           id="dob"
           invalidText="Invalid error message."
           labelText="Date Of Birth"
@@ -129,7 +155,7 @@ const InformationForm = () => {
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.TextInputFields, classes.DOBSSN}
           id="ssn"
           invalidText="Invalid error message."
           labelText="Social Security Number (Last 4 Digits, optional)"
@@ -138,7 +164,7 @@ const InformationForm = () => {
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.TextInputFields, classes.ContactInfo}
           id="mobile"
           invalidText="Invalid error message."
           labelText="Mobile Number"
@@ -159,7 +185,7 @@ const InformationForm = () => {
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.TextInputFields, classes.ContactInfo}
           id="email"
           type="email"
           invalidText="Invalid error message."
@@ -181,7 +207,7 @@ const InformationForm = () => {
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.TextInputFields, classes.AddressInfo}
           id="mailingAddress1"
           invalidText="Invalid error message."
           labelText="Mailing Address"
@@ -201,7 +227,7 @@ const InformationForm = () => {
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.TextInputFields, classes.AddressInfo}
           id="mailingAddress2"
           invalidText="Invalid error message."
           labelText="Mailing Address (optional)"
@@ -275,7 +301,7 @@ const InformationForm = () => {
           }}
         />
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div style={{ marginTop: '2rem', marginLeft: '2rem' }}>
         <Button
           className={classes.submitButton}
           kind="primary"
