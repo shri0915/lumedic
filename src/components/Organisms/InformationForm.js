@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button, Form, TextInput, Select, SelectItem,
 } from 'carbon-components-react';
 import { createUseStyles } from 'react-jss';
 import stateList from '../../data/StateList';
+import emailPattern from '../../data/Patterns';
 
 const useStyle = createUseStyles({
   informationForm: {
@@ -70,6 +71,18 @@ const useStyle = createUseStyles({
 });
 
 const InformationForm = () => {
+  
+  const [validity, setValidity] = useState('');
+  const InputValidation = (inputValue, elementID) =>{
+    if(inputValue === ''){
+      setValidity(elementID);
+    }
+    else
+    {
+      setValidity('');
+    }
+    
+  }
   const classes = useStyle();
   return (
     <Form className={classes.informationForm}>
@@ -98,17 +111,10 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="First Name"
           placeholder="Johnny"
-          required
-          onBlur={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
-          onKeyDownCapture={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
+          required={true}
+          invalid={validity === "firstName" && true}
+          onBlur={event => InputValidation(event.target.value, event.target.id)}
+          onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -119,16 +125,9 @@ const InformationForm = () => {
           labelText="Last Name"
           placeholder="Appleseed"
           required
-          onBlur={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
-          onKeyDownCapture={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
+         invalid={validity === "lastName" && true}
+          onBlur={event => InputValidation(event.target.value, event.target.id)}
+          onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -138,17 +137,10 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="Date Of Birth"
           placeholder="MM/DD/YYYY"
-          required
-          onBlur={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
-          onKeyDownCapture={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
+           required
+          invalid={validity === "dob" && true}
+          onBlur={event => InputValidation(event.target.value, event.target.id)}
+          onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -167,17 +159,10 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="Mobile Number"
           placeholder="(###)###-####"
-          required
-          onBlur={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
-          onKeyDownCapture={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
+           required
+           invalid={validity === "mobile" && true}
+           onBlur={event => InputValidation(event.target.value, event.target.id)}
+           onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
         />
 
       </div>
@@ -189,18 +174,12 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="Email"
           placeholder="you@mail.com"
-          required
-          pattern="\S+@\S+\.\S+"
-          onBlur={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
-          onKeyDownCapture={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
+           required
+          invalid={validity === "email" && true}
+          onBlur={event => InputValidation(event.target.value, event.target.id)}
+          onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
+          pattern={emailPattern}
+          
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -210,17 +189,10 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="Mailing Address"
           placeholder="Primary street address"
-          required
-          onBlur={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
-          onKeyDownCapture={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
+           required
+           invalid={validity === "mailingAddress1" && true}
+           onBlur={event => InputValidation(event.target.value, event.target.id)}
+           onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -239,17 +211,10 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="City"
           placeholder="Seattle"
-          required
-          onBlur={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
-          onKeyDownCapture={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
+           required
+           invalid={validity === "city" && true}
+           onBlur={event => InputValidation(event.target.value, event.target.id)}
+           onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -258,17 +223,7 @@ const InformationForm = () => {
           id="select-1"
           invalidText="This is an invalid error message."
           labelText="State"
-          required
-          onBlur={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
-          onKeyDownCapture={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
+           required
         >
           {stateList.map((state) => (
             <SelectItem
@@ -286,17 +241,10 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="Postal Code"
           placeholder="#####"
-          required
-          onBlur={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
-          onKeyDownCapture={(event) => {
-            if (event.target.value === '') {
-              event.target.reportValidity(false);
-            }
-          }}
+           required
+           invalid={validity === "postalCode" && true}
+           onBlur={event => InputValidation(event.target.value, event.target.id)}
+           onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
         />
       </div>
       <div style={{ marginTop: '2rem', marginLeft: '2rem' }}>
