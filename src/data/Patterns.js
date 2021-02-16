@@ -1,3 +1,2 @@
-
-const emailPattern = '%5CS+@%5CS+%5C.%5CS+'
+const emailPattern = "\\S+@\\S+\\.\\S+"
 export default emailPattern;

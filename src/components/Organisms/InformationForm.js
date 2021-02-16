@@ -5,7 +5,7 @@ import {
 import { createUseStyles } from 'react-jss';
 import stateList from '../../data/StateList';
 import emailPattern from '../../data/Patterns';
-
+import apiCall from '../../classes/api/lumedicApi';
 const useStyle = createUseStyles({
   informationForm: {
     display: 'Flex',
@@ -71,7 +71,19 @@ const useStyle = createUseStyles({
 });
 
 const InformationForm = () => {
-  
+  const [values, setValues] = useState({
+  firstName:"",
+  lastName:"",
+  dateOfBirth:"",
+  email:"",
+  last4SSN:"",
+  phoneNumber:"",
+  addressLine1:"",
+  addressLine2:"",
+  city:"",
+  state:"",
+  zip:"",
+  credName:"COVID-19 Vaccine"});
   const [validity, setValidity] = useState('');
   const InputValidation = (inputValue, elementID) =>{
     if(inputValue === ''){
@@ -83,6 +95,10 @@ const InformationForm = () => {
     }
     
   }
+  const changeHandler = e => {
+    setValues({...values, [e.target.id]: e.target.value})
+ }
+  
   const classes = useStyle();
   return (
     <Form className={classes.informationForm}>
@@ -112,9 +128,9 @@ const InformationForm = () => {
           labelText="First Name"
           placeholder="Johnny"
           required={true}
-          invalid={validity === "firstName" && true}
+         invalid={validity === "firstName" && true}
           onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
+          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -127,42 +143,43 @@ const InformationForm = () => {
           required
          invalid={validity === "lastName" && true}
           onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
+          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
         />
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
           className={classes.TextInputFields, classes.DOBSSN}
-          id="dob"
+          id="dateOfBirth"
           invalidText="Invalid error message."
           labelText="Date Of Birth"
           placeholder="MM/DD/YYYY"
-           required
-          invalid={validity === "dob" && true}
+          required
+          invalid={validity === "dateOfBirth" && true}
           onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
+          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
         />
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
           className={classes.TextInputFields, classes.DOBSSN}
-          id="ssn"
+          id="last4SSN"
           invalidText="Invalid error message."
           labelText="Social Security Number (Last 4 Digits, optional)"
           placeholder="####"
+          onChange={changeHandler}
         />
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
           className={classes.TextInputFields, classes.ContactInfo}
-          id="mobile"
+          id="phoneNumber"
           invalidText="Invalid error message."
           labelText="Mobile Number"
           placeholder="(###)###-####"
-           required
-           invalid={validity === "mobile" && true}
+          required
+          invalid={validity === "phoneNumber" && true}
            onBlur={event => InputValidation(event.target.value, event.target.id)}
-           onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
+           onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
         />
 
       </div>
@@ -174,34 +191,35 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="Email"
           placeholder="you@mail.com"
-           required
-          invalid={validity === "email" && true}
-          onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
+          required
           pattern={emailPattern}
+         invalid={validity === "email" && true}
+         onBlur={event => InputValidation(event.target.value, event.target.id)}
+         onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
           
         />
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
           className={classes.TextInputFields, classes.AddressInfo}
-          id="mailingAddress1"
+          id="addressLine1"
           invalidText="Invalid error message."
           labelText="Mailing Address"
           placeholder="Primary street address"
            required
-           invalid={validity === "mailingAddress1" && true}
+           invalid={validity === "addressLine1" && true}
            onBlur={event => InputValidation(event.target.value, event.target.id)}
-           onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
+          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
         />
       </div>
       <div style={{ margin: '2rem' }}>
         <TextInput
           className={classes.TextInputFields, classes.AddressInfo}
-          id="mailingAddress2"
+          id="addressLine2"
           invalidText="Invalid error message."
           labelText="Mailing Address (optional)"
           placeholder="Unit #, Apt, Suite"
+          onChange={changeHandler}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -211,19 +229,20 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="City"
           placeholder="Seattle"
-           required
-           invalid={validity === "city" && true}
-           onBlur={event => InputValidation(event.target.value, event.target.id)}
-           onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
+          required
+          invalid={validity === "city" && true}
+          onBlur={event => InputValidation(event.target.value, event.target.id)}
+          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
         />
       </div>
       <div style={{ margin: '2rem' }}>
         <Select
           defaultValue="State"
-          id="select-1"
+          id="state"
           invalidText="This is an invalid error message."
           labelText="State"
            required
+           onChange={changeHandler}
         >
           {stateList.map((state) => (
             <SelectItem
@@ -237,14 +256,14 @@ const InformationForm = () => {
       <div style={{ margin: '2rem' }}>
         <TextInput
           className={classes.TextInputFields}
-          id="postalCode"
+          id="zip"
           invalidText="Invalid error message."
           labelText="Postal Code"
           placeholder="#####"
-           required
-           invalid={validity === "postalCode" && true}
-           onBlur={event => InputValidation(event.target.value, event.target.id)}
-           onKeyDownCapture={event => InputValidation(event.target.value, event.target.id)}
+          required
+           invalid={validity === "zip" && true}
+          onBlur={event => InputValidation(event.target.value, event.target.id)}
+          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
         />
       </div>
       <div style={{ marginTop: '2rem', marginLeft: '2rem' }}>
@@ -252,6 +271,7 @@ const InformationForm = () => {
           className={classes.submitButton}
           kind="primary"
           type="submit"
+          onClick={event => event.preventDefault(apiCall.postData(values))}
         >
           Submit
         </Button>
