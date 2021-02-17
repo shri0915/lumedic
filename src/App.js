@@ -1,14 +1,10 @@
-import { createUseStyles } from 'react-jss';
+import {AppTheme} from './Styles/Theme'
 import React from 'react';
 import InformationForm from './components/Organisms/InformationForm';
-const useStyle = createUseStyles({
-  App: {
-    backgroundColor: '#E5E5E5'
-  }}
-  );
+
 
 function App() {
-  const classes = useStyle();
+  const classes = AppTheme();
   return (
     <div className={classes.App}>
       <header className="App-header">
