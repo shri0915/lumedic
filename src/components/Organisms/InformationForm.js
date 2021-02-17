@@ -5,7 +5,7 @@ import {
 import { createUseStyles } from 'react-jss';
 import stateList from '../../data/StateList';
 import {emailPattern, addressPattern, namePattern, phoneNumberPattern, zipPattern, ssnPattern} from '../../data/Patterns';
-import apiCall from '../../classes/api/lumedicApi';
+import {ValidatePatient} from '../../classes/api/lumedicApi';
 const useStyle = createUseStyles({
   informationForm: {
     display: 'Flex',
@@ -333,8 +333,7 @@ const InformationForm = () => {
         <Button
           className={classes.submitButton}
           kind="primary"
-          type="submit"
-          onClick={event => event.preventDefault(apiCall.postData(patientFormData))}
+          onClick={event => event.preventDefault(ValidatePatient(patientFormData))}
         >
           Submit
         </Button>
