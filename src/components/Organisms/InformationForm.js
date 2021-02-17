@@ -81,7 +81,7 @@ const useStyle = createUseStyles({
 const InformationForm = () => {
 
 
-  const [values, setValues] = useState({
+  const [patientFormData, setPatientFormData] = useState({
   firstName:"",
   lastName:"",
   dateOfBirth:"",
@@ -123,14 +123,11 @@ const InformationForm = () => {
   
   
 
-  // const [allowNumberValidity, setAllowNumberValidity] = useState({
-  //   last4SSN:true,
-  //   phoneNumber:true,
-  //   zip:true});
+  
 
   const ValidateAndHandleChange = e => {
     
-    setValues({...values, [e.target.id]: e.target.value});
+    setPatientFormData({...patientFormData, [e.target.id]: e.target.value});
   
     {
       if(e.target.value === ''){
@@ -337,7 +334,7 @@ const InformationForm = () => {
           className={classes.submitButton}
           kind="primary"
           type="submit"
-          onClick={event => event.preventDefault(apiCall.postData(values))}
+          onClick={event => event.preventDefault(apiCall.postData(patientFormData))}
         >
           Submit
         </Button>
