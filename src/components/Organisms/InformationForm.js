@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
 import {
   Button, Form, TextInput, Select, SelectItem,
 } from 'carbon-components-react';
 import { createUseStyles } from 'react-jss';
 import stateList from '../../data/StateList';
-import emailPattern from '../../data/Patterns';
+import {emailPattern, addressPattern, namePattern, phoneNumberPattern, zipPattern, ssnPattern} from '../../data/Patterns';
 import apiCall from '../../classes/api/lumedicApi';
 const useStyle = createUseStyles({
   informationForm: {
@@ -63,14 +63,12 @@ const useStyle = createUseStyles({
     display: 'flex',
     flexWrap: 'wrap',
     width: '20vw'
-  },
-  SubmitFlex: {
-    
-
   }
 });
 
 const InformationForm = () => {
+
+
   const [values, setValues] = useState({
   firstName:"",
   lastName:"",
@@ -84,20 +82,71 @@ const InformationForm = () => {
   state:"",
   zip:"",
   credName:"COVID-19 Vaccine"});
-  const [validity, setValidity] = useState('');
-  const InputValidation = (inputValue, elementID) =>{
-    if(inputValue === ''){
-      setValidity(elementID);
-    }
-    else
-    {
-      setValidity('');
-    }
+
+  const [validity, setValidity] = useState({
+  firstName:true,
+  lastName:true,
+  dateOfBirth:true,
+  email:true,
+  last4SSN:true,
+  phoneNumber:true,
+  addressLine1:true,
+  addressLine2:true,
+  city:true,
+  state:true,
+  zip:true});
+
+  const [patternValidity, setPatternValidity] = useState({
+  firstName:true,
+  lastName:true,
+  dateOfBirth:true,
+  email:true,
+  last4SSN:true,
+  phoneNumber:true,
+  addressLine1:true,
+  addressLine2:true,
+  city:true,
+  state:true,
+  zip:true});
+
+  // const [allowNumberValidity, setAllowNumberValidity] = useState({
+  //   last4SSN:true,
+  //   phoneNumber:true,
+  //   zip:true});
+
+  const ValidateAndHandleChange = e => {
     
+    setValues({...values, [e.target.id]: e.target.value});
+  
+    {
+      if(e.target.value === ''){
+        setValidity({...validity, [e.target.id]: false})
+      }
+      else{
+        setValidity({...validity, [e.target.id]: true})
+      }
+    }
+  
+      {
+        console.log('pv')
+        if(e.target.id === 'firstName' || e.target.id === 'lastName' || e.target.id === 'city'){
+          setPatternValidity({...patternValidity, [e.target.id]: namePattern.test(e.target.value)})
+        }
+        else if(e.target.id === 'phoneNumber'){
+          setPatternValidity({...patternValidity, [e.target.id]: phoneNumberPattern.test(e.target.value)})
+        }
+        else if(e.target.id === 'last4SSN'){
+          setPatternValidity({...patternValidity, [e.target.id]: ssnPattern.test(e.target.value)})
+        }
+        else if(e.target.id === 'zip'){
+          setPatternValidity({...patternValidity, [e.target.id]: zipPattern.test(e.target.value)})
+        }
+        else if(e.target.id === 'email'){
+          setPatternValidity({...patternValidity, [e.target.id]: emailPattern.test(e.target.value)})
+        }
+      }
   }
-  const changeHandler = e => {
-    setValues({...values, [e.target.id]: e.target.value})
- }
+  
   
   const classes = useStyle();
   return (
@@ -128,9 +177,9 @@ const InformationForm = () => {
           labelText="First Name"
           placeholder="Johnny"
           required={true}
-         invalid={validity === "firstName" && true}
-          onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
+          invalid={!validity.firstName || !patternValidity.firstName}
+          onBlur={ValidateAndHandleChange}
+          onChange={ValidateAndHandleChange}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -141,9 +190,9 @@ const InformationForm = () => {
           labelText="Last Name"
           placeholder="Appleseed"
           required
-         invalid={validity === "lastName" && true}
-          onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
+         invalid={!validity.lastName || !patternValidity.lastName}
+         onBlur={ValidateAndHandleChange}
+         onChange={ValidateAndHandleChange}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -154,9 +203,9 @@ const InformationForm = () => {
           labelText="Date Of Birth"
           placeholder="MM/DD/YYYY"
           required
-          invalid={validity === "dateOfBirth" && true}
-          onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
+          invalid={!validity.dateOfBirth}
+          onBlur={ValidateAndHandleChange}
+          onChange={ValidateAndHandleChange}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -166,7 +215,8 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="Social Security Number (Last 4 Digits, optional)"
           placeholder="####"
-          onChange={changeHandler}
+          invalid={!patternValidity.last4SSN}
+          onChange={ValidateAndHandleChange}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -177,9 +227,9 @@ const InformationForm = () => {
           labelText="Mobile Number"
           placeholder="(###)###-####"
           required
-          invalid={validity === "phoneNumber" && true}
-           onBlur={event => InputValidation(event.target.value, event.target.id)}
-           onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
+          invalid={!validity.phoneNumber || !patternValidity.phoneNumber}
+          onBlur={ValidateAndHandleChange}
+          onChange={ValidateAndHandleChange}
         />
 
       </div>
@@ -192,10 +242,9 @@ const InformationForm = () => {
           labelText="Email"
           placeholder="you@mail.com"
           required
-          pattern={emailPattern}
-         invalid={validity === "email" && true}
-         onBlur={event => InputValidation(event.target.value, event.target.id)}
-         onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
+         invalid={!validity.email || !patternValidity.email}
+         onBlur={ValidateAndHandleChange}
+         onChange={ValidateAndHandleChange}
           
         />
       </div>
@@ -207,9 +256,10 @@ const InformationForm = () => {
           labelText="Mailing Address"
           placeholder="Primary street address"
            required
-           invalid={validity === "addressLine1" && true}
-           onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
+           invalid={!validity.addressLine1 || !patternValidity.addressLine1}
+           onBlur={ValidateAndHandleChange}
+           onChange={ValidateAndHandleChange}
+          pattern={addressPattern}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -219,7 +269,8 @@ const InformationForm = () => {
           invalidText="Invalid error message."
           labelText="Mailing Address (optional)"
           placeholder="Unit #, Apt, Suite"
-          onChange={changeHandler}
+          invalid={!patternValidity.addressLine2}
+          onChange={ValidateAndHandleChange}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -230,9 +281,9 @@ const InformationForm = () => {
           labelText="City"
           placeholder="Seattle"
           required
-          invalid={validity === "city" && true}
-          onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
+          invalid={!validity.city || !patternValidity.city}
+          onBlur={ValidateAndHandleChange}
+          onChange={ValidateAndHandleChange}
         />
       </div>
       <div style={{ margin: '2rem' }}>
@@ -242,7 +293,7 @@ const InformationForm = () => {
           invalidText="This is an invalid error message."
           labelText="State"
            required
-           onChange={changeHandler}
+           onChange={ValidateAndHandleChange}
         >
           {stateList.map((state) => (
             <SelectItem
@@ -261,9 +312,9 @@ const InformationForm = () => {
           labelText="Postal Code"
           placeholder="#####"
           required
-           invalid={validity === "zip" && true}
-          onBlur={event => InputValidation(event.target.value, event.target.id)}
-          onChange={event => InputValidation(event.target.value, event.target.id), changeHandler}
+          invalid={!validity.zip || !patternValidity.zip}
+          onBlur={ValidateAndHandleChange}
+          onChange={ValidateAndHandleChange}
         />
       </div>
       <div style={{ marginTop: '2rem', marginLeft: '2rem' }}>
