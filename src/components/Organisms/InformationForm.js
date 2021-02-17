@@ -47,7 +47,8 @@ const useStyle = createUseStyles({
   NameBoxes: {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '20vw'
+    width: '20vw',
+    maxWidth: '20vw'
   },
   DOBSSN: {
     display: 'flex',
@@ -63,6 +64,17 @@ const useStyle = createUseStyles({
     display: 'flex',
     flexWrap: 'wrap',
     width: '20vw'
+  },
+  DivStyle: {
+    margin: '2rem'
+  },
+  DivStyleRL: {
+    marginLeft: "2rem",
+    marginRight: "2rem"
+  },
+  DivStyleTL: {
+    marginLeft: "2rem",
+    marginTop: "2rem"
   }
 });
 
@@ -108,6 +120,8 @@ const InformationForm = () => {
   city:true,
   state:true,
   zip:true});
+  
+  
 
   // const [allowNumberValidity, setAllowNumberValidity] = useState({
   //   last4SSN:true,
@@ -128,7 +142,6 @@ const InformationForm = () => {
     }
   
       {
-        console.log('pv')
         if(e.target.id === 'firstName' || e.target.id === 'lastName' || e.target.id === 'city'){
           setPatternValidity({...patternValidity, [e.target.id]: namePattern.test(e.target.value)})
         }
@@ -145,19 +158,21 @@ const InformationForm = () => {
           setPatternValidity({...patternValidity, [e.target.id]: emailPattern.test(e.target.value)})
         }
       }
+  
   }
+  
   
   
   const classes = useStyle();
   return (
     <Form className={classes.informationForm}>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <labelText className={classes.lableTextHeading}>
           Please enter the same information you provided
           in your Providence health system medical record.
         </labelText>
       </div>
-      <div style={{ marginRight: '2rem', marginLeft: '2rem' }}>
+      <div className={classes.DivStyleRL}>
         <labelText className={classes.lableText}>
           The information you provide on this page is used to locate your record from
           your health system for the purpose of issuing your vaccine records to your
@@ -169,7 +184,7 @@ const InformationForm = () => {
           or data charges may be imposed by your carrier.
         </labelText>
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields, classes.NameBoxes}
           id="firstName"
@@ -182,7 +197,7 @@ const InformationForm = () => {
           onChange={ValidateAndHandleChange}
         />
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields, classes.NameBoxes}
           id="lastName"
@@ -195,7 +210,7 @@ const InformationForm = () => {
          onChange={ValidateAndHandleChange}
         />
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields, classes.DOBSSN}
           id="dateOfBirth"
@@ -208,7 +223,7 @@ const InformationForm = () => {
           onChange={ValidateAndHandleChange}
         />
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields, classes.DOBSSN}
           id="last4SSN"
@@ -219,7 +234,7 @@ const InformationForm = () => {
           onChange={ValidateAndHandleChange}
         />
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields, classes.ContactInfo}
           id="phoneNumber"
@@ -233,7 +248,7 @@ const InformationForm = () => {
         />
 
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields, classes.ContactInfo}
           id="email"
@@ -248,7 +263,7 @@ const InformationForm = () => {
           
         />
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields, classes.AddressInfo}
           id="addressLine1"
@@ -262,7 +277,7 @@ const InformationForm = () => {
           pattern={addressPattern}
         />
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields, classes.AddressInfo}
           id="addressLine2"
@@ -273,7 +288,7 @@ const InformationForm = () => {
           onChange={ValidateAndHandleChange}
         />
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields}
           id="city"
@@ -286,14 +301,14 @@ const InformationForm = () => {
           onChange={ValidateAndHandleChange}
         />
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <Select
           defaultValue="State"
           id="state"
           invalidText="This is an invalid error message."
           labelText="State"
-           required
-           onChange={ValidateAndHandleChange}
+          required
+          onChange={ValidateAndHandleChange}
         >
           {stateList.map((state) => (
             <SelectItem
@@ -304,7 +319,7 @@ const InformationForm = () => {
           ))}
         </Select>
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <TextInput
           className={classes.TextInputFields}
           id="zip"
@@ -317,7 +332,7 @@ const InformationForm = () => {
           onChange={ValidateAndHandleChange}
         />
       </div>
-      <div style={{ marginTop: '2rem', marginLeft: '2rem' }}>
+      <div className={classes.DivStyleTL}>
         <Button
           className={classes.submitButton}
           kind="primary"
@@ -327,7 +342,7 @@ const InformationForm = () => {
           Submit
         </Button>
       </div>
-      <div style={{ margin: '2rem' }}>
+      <div className={classes.DivStyle}>
         <labelText className={classes.lableTextPrivacy}>
           By submitting your information, you are agreeing to the Privacy Policy.
         </labelText>
