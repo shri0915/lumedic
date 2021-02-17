@@ -95,18 +95,7 @@ const InformationForm = () => {
   zip:"",
   credName:"COVID-19 Vaccine"});
 
-  const [validity, setValidity] = useState({
-  firstName:true,
-  lastName:true,
-  dateOfBirth:true,
-  email:true,
-  last4SSN:true,
-  phoneNumber:true,
-  addressLine1:true,
-  addressLine2:true,
-  city:true,
-  state:true,
-  zip:true});
+  
 
   const [patternValidity, setPatternValidity] = useState({
   firstName:true,
@@ -122,40 +111,40 @@ const InformationForm = () => {
   zip:true});
   
   
-
+  const validatePatientInfo = () => {
+    ValidatePatient(patientFormData)
+  }
   
+  
+
+  const CheckPatternValidity = (fieldID, value) => {
+    if(value === ''){
+      setPatternValidity({...patternValidity, [fieldID]: false})
+    }
+    else{
+    setPatternValidity({...patternValidity, [fieldID]: true})
+    
+    if(fieldID === 'firstName' || fieldID === 'lastName' || fieldID === 'city'){
+      setPatternValidity({...patternValidity, [fieldID]: namePattern.test(value)})
+    }
+    else if(fieldID === 'phoneNumber'){
+      setPatternValidity({...patternValidity, [fieldID]: phoneNumberPattern.test(value)})
+    }
+    else if(fieldID === 'last4SSN'){
+      setPatternValidity({...patternValidity, [fieldID]: ssnPattern.test(value)})
+    }
+    else if(fieldID === 'zip'){
+      setPatternValidity({...patternValidity, [fieldID]: zipPattern.test(value)})
+    }
+    else if(fieldID === 'email'){
+      setPatternValidity({...patternValidity, [fieldID]: emailPattern.test(value)})
+    }
+  }
+}
 
   const ValidateAndHandleChange = e => {
-    
     setPatientFormData({...patientFormData, [e.target.id]: e.target.value});
-  
-    {
-      if(e.target.value === ''){
-        setValidity({...validity, [e.target.id]: false})
-      }
-      else{
-        setValidity({...validity, [e.target.id]: true})
-      }
-    }
-  
-      {
-        if(e.target.id === 'firstName' || e.target.id === 'lastName' || e.target.id === 'city'){
-          setPatternValidity({...patternValidity, [e.target.id]: namePattern.test(e.target.value)})
-        }
-        else if(e.target.id === 'phoneNumber'){
-          setPatternValidity({...patternValidity, [e.target.id]: phoneNumberPattern.test(e.target.value)})
-        }
-        else if(e.target.id === 'last4SSN'){
-          setPatternValidity({...patternValidity, [e.target.id]: ssnPattern.test(e.target.value)})
-        }
-        else if(e.target.id === 'zip'){
-          setPatternValidity({...patternValidity, [e.target.id]: zipPattern.test(e.target.value)})
-        }
-        else if(e.target.id === 'email'){
-          setPatternValidity({...patternValidity, [e.target.id]: emailPattern.test(e.target.value)})
-        }
-      }
-  
+    CheckPatternValidity(e.target.id, e.target.value);
   }
   
   
@@ -189,7 +178,7 @@ const InformationForm = () => {
           labelText="First Name"
           placeholder="Johnny"
           required={true}
-          invalid={!validity.firstName || !patternValidity.firstName}
+          invalid={!patternValidity.firstName}
           onBlur={ValidateAndHandleChange}
           onChange={ValidateAndHandleChange}
         />
@@ -202,7 +191,7 @@ const InformationForm = () => {
           labelText="Last Name"
           placeholder="Appleseed"
           required
-         invalid={!validity.lastName || !patternValidity.lastName}
+         invalid={!patternValidity.lastName}
          onBlur={ValidateAndHandleChange}
          onChange={ValidateAndHandleChange}
         />
@@ -215,7 +204,7 @@ const InformationForm = () => {
           labelText="Date Of Birth"
           placeholder="MM/DD/YYYY"
           required
-          invalid={!validity.dateOfBirth}
+          invalid={!patternValidity.dateOfBirth}
           onBlur={ValidateAndHandleChange}
           onChange={ValidateAndHandleChange}
         />
@@ -239,7 +228,7 @@ const InformationForm = () => {
           labelText="Mobile Number"
           placeholder="(###)###-####"
           required
-          invalid={!validity.phoneNumber || !patternValidity.phoneNumber}
+          invalid={!patternValidity.phoneNumber}
           onBlur={ValidateAndHandleChange}
           onChange={ValidateAndHandleChange}
         />
@@ -254,7 +243,7 @@ const InformationForm = () => {
           labelText="Email"
           placeholder="you@mail.com"
           required
-         invalid={!validity.email || !patternValidity.email}
+         invalid={!patternValidity.email}
          onBlur={ValidateAndHandleChange}
          onChange={ValidateAndHandleChange}
           
@@ -268,7 +257,7 @@ const InformationForm = () => {
           labelText="Mailing Address"
           placeholder="Primary street address"
            required
-           invalid={!validity.addressLine1 || !patternValidity.addressLine1}
+           invalid={!patternValidity.addressLine1}
            onBlur={ValidateAndHandleChange}
            onChange={ValidateAndHandleChange}
           pattern={addressPattern}
@@ -293,7 +282,7 @@ const InformationForm = () => {
           labelText="City"
           placeholder="Seattle"
           required
-          invalid={!validity.city || !patternValidity.city}
+          invalid={!patternValidity.city}
           onBlur={ValidateAndHandleChange}
           onChange={ValidateAndHandleChange}
         />
@@ -324,7 +313,7 @@ const InformationForm = () => {
           labelText="Postal Code"
           placeholder="#####"
           required
-          invalid={!validity.zip || !patternValidity.zip}
+          invalid={!patternValidity.zip}
           onBlur={ValidateAndHandleChange}
           onChange={ValidateAndHandleChange}
         />
@@ -333,7 +322,7 @@ const InformationForm = () => {
         <Button
           className={classes.submitButton}
           kind="primary"
-          onClick={event => event.preventDefault(ValidatePatient(patientFormData))}
+          onClick={validatePatientInfo}
         >
           Submit
         </Button>
