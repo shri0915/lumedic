@@ -4,7 +4,8 @@ import {
 } from 'carbon-components-react';
 import {InformationFormTheme} from '../../Styles/Theme'
 import stateList from '../../data/StateList';
-import {emailPattern, addressPattern, namePattern, phoneNumberPattern, zipPattern, ssnPattern} from '../../data/Patterns';
+import {emailPattern, addressPattern, namePattern, phoneNumberPattern, 
+  zipPattern, ssnPattern} from '../../data/Patterns';
 import {ValidatePatient} from '../../classes/api/lumedicApi';
 
 
