@@ -142,7 +142,7 @@ const InformationForm = () => {
       </div>
       <div className={classes.DivStyle}>
         <TextInput
-          className={classes.TextInputFields, classes.DOBSSN}
+          className={classes.DOBSSN}
           id="last4SSN"
           invalidText="Invalid error message."
           labelText="Social Security Number (Last 4 Digits, optional)"
@@ -207,7 +207,7 @@ const InformationForm = () => {
       </div>
       <div className={classes.DivStyle}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.CityInfo}
           id="city"
           invalidText="Invalid error message."
           labelText="City"
@@ -220,6 +220,7 @@ const InformationForm = () => {
       </div>
       <div className={classes.DivStyle}>
         <Select
+          className={classes.CityInfo}
           defaultValue="State"
           id="state"
           invalidText="This is an invalid error message."
@@ -238,7 +239,7 @@ const InformationForm = () => {
       </div>
       <div className={classes.DivStyle}>
         <TextInput
-          className={classes.TextInputFields}
+          className={classes.CityInfo}
           id="zip"
           invalidText="Invalid error message."
           labelText="Postal Code"
