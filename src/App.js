@@ -1,6 +1,7 @@
 import {AppTheme} from './Styles/Theme'
 import React from 'react';
-import InformationForm from './components/Organisms/InformationForm';
+import InformationForm from './components/Organisms/InformationForm'
+
 
 
 function App() {
