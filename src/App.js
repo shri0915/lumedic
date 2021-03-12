@@ -1,12 +1,16 @@
+import {AppTheme} from './Styles/Theme'
+import React from 'react';
+import InformationForm from './components/Organisms/InformationForm'
 
-import './App.css';
-import InformationForm from './components/Organisms/InformationForm';
-function App(){
+
+
+function App() {
+  const classes = AppTheme();
   return (
-    <div className="App">
+    <div className={classes.App}>
       <header className="App-header">
         <div>
-       <InformationForm/>
+          <InformationForm />
         </div>
       </header>
     </div>
